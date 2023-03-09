@@ -1,0 +1,38 @@
+name: Upload Website
+
+on:
+  push:
+    branches:
+    - master
+
+env:
+  appname: ordernizer
+  bucket: s3://ordernizer.org
+  distribution: E1JGWJYOAW71QO
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm run test:headless
+
+    - name: Build
+      run: npm run build:prod
+
+    - name: Deploy static site to S3 bucket
+      run: aws s3 sync "./dist/$appname" "$bucket" --cache-control "max-age=0, must-revalidate"
+
+    - name: Refresh Cloudfront Distribution
+      run: aws cloudfront create-invalidation --distribution-id $distribution --paths "/*"
