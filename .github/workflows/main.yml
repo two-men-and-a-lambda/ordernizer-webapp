@@ -5,6 +5,9 @@ on:
     branches:
     - main
 
+    paths:
+      - src/**
+
 env:
   appname: ordernizer
   bucket: s3://ordernizer.org
