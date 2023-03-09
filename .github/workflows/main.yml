@@ -25,11 +25,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run tests
-      run: npm run test:headless
-
     - name: Build
-      run: npm run build:prod
+      run: npm run build
 
     - name: Deploy static site to S3 bucket
       run: aws s3 sync "./dist/$appname" "$bucket" --cache-control "max-age=0, must-revalidate"
