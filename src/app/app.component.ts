@@ -28,9 +28,9 @@ export class AppComponent {
 
   submitInventory() {
     this.editStock = !this.editStock
-    this.dataSource.data.forEach(function (row) {
-      console.log(row['units_remaining'])
-    });
+    this.wholeSaleService.postInventory(this.dataSource.data).subscribe((res: any) => {
+      this.dataSource.data = res
+    })
   }
 
   submitPending() {
