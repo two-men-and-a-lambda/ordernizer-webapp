@@ -2,8 +2,8 @@ import { Component, DefaultIterableDiffer, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatTableDataSource } from '@angular/material/table'
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'
-import { User, UserColumns } from './model/user'
-import { UserService } from './services/user.service'
+import { ProductInventory, ProductInventoryColumns } from './model/ProductInventory'
+import { WholeSaleService } from './services/wholesale.service'
 
 @Component({
   selector: 'app-root',
@@ -11,66 +11,61 @@ import { UserService } from './services/user.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  displayedColumns: string[] = UserColumns.map((col) => col.key)
-  columnsSchema: any = UserColumns
-  dataSource = new MatTableDataSource<User>()
+  displayedColumns: string[] = ProductInventoryColumns.map((col) => col.key)
+  columnsSchema: any = ProductInventoryColumns
+  dataSource = new MatTableDataSource<ProductInventory>()
   valid: any = {}
+  editStock: boolean = false
+  editPending: boolean = false
 
-  constructor(public dialog: MatDialog, private userService: UserService) {}
+  constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((res: any) => {
+    this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
     })
   }
 
-  editRow(row: User) {
-    if (row.id === 0) {
-      this.userService.addUser(row).subscribe((newUser: User) => {
-        row.id = newUser.id
-        row.isEdit = false
-      })
-    } else {
-      this.userService.updateUser(row).subscribe(() => (row.isEdit = false))
+  submitInventory() {
+    this.editStock = !this.editStock
+    this.dataSource.data.forEach(function (row) {
+      console.log(row['units_remaining'])
+    });
+  }
+
+  submitPending() {
+    this.editPending = !this.editPending
+    this.dataSource.data.forEach(function (row) {
+      console.log(row['pending'])
+    });
+  }
+
+  editRow(row: ProductInventory) {
+    if (row.wholesaleId === 0) {
+      console.log('add row')
+      }
+    else {
+      console.log('edit row')
     }
   }
 
   addRow() {
-    const newRow: User = {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      email: '',
-      birthDate: '',
-      isEdit: true,
+    let new_F_Date: Date = new Date();
+    // Converting date to string
+    let result: string = new_F_Date.toLocaleString();
+    /**const newRow: ProductInventory = {
       isSelected: false,
+      businessID: -1
+      
     }
-    this.dataSource.data = [newRow, ...this.dataSource.data]
+    this.dataSource.data = [newRow, ...this.dataSource.data]**/
   }
 
   removeRow(id: number) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.dataSource.data = this.dataSource.data.filter(
-        (u: User) => u.id !== id,
-      )
-    })
+    console.log('remove row')
   }
 
-  removeSelectedRows() {
-    const users = this.dataSource.data.filter((u: User) => u.isSelected)
-    this.dialog
-      .open(ConfirmDialogComponent)
-      .afterClosed()
-      .subscribe((confirm) => {
-        if (confirm) {
-          this.userService.deleteUsers(users).subscribe(() => {
-            this.dataSource.data = this.dataSource.data.filter(
-              (u: User) => !u.isSelected,
-            )
-          })
-        }
-      })
-  }
+
 
   inputHandler(e: any, id: number, key: string) {
     if (!this.valid[id]) {
@@ -84,14 +79,6 @@ export class AppComponent {
       return Object.values(this.valid[id]).some((item) => item === false)
     }
     return false
-  }
-
-  isAllSelected() {
-    return this.dataSource.data.every((item) => item.isSelected)
-  }
-
-  isAnySelected() {
-    return this.dataSource.data.some((item) => item.isSelected)
   }
 
   selectAll(event: any) {

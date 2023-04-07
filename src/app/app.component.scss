@@ -7,7 +7,18 @@ p {
     margin-top: 25px;
   }
   .btn-edit {
-    text-align: right;
+    text-align: left;
+  }
+  .edit-header {
+    padding: 0;
+    margin: 0;
+    color: blue;
+  }
+  .value-row {
+    float: left;
+    padding: 0;
+    margin: 0;
+    
   }
   h2 {
     text-align: center;
@@ -38,6 +49,10 @@ p {
   .button-remove {
     color: red;
   }
+  .editButton {
+    color:blue($color: blue);
+
+  }
   
   ::ng-deep .mat-form-field-infix {
     width: 100% !important;
@@ -46,3 +61,8 @@ p {
   .form-input {
     padding-right: 5px;
   }
+  .mat-column-test{
+    color: blue;
+    width: 17% !important
+  }
+  
