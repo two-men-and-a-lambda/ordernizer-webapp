@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
-import { ProductInventory } from '../model/ProductInventory';
+import { ProductInventory } from '../models/ProductInventory';
 import { map } from 'rxjs/operators';
 
 @Injectable({
