@@ -21,7 +21,7 @@ export class WholeSaleService {
     let data: any={};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      let val = row['units_remaining']
+      let val = Number(row['units_remaining'])
       data[key] = val
     }))
     data['timestamp'] = new Date();
