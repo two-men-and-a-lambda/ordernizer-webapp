@@ -1,17 +1,17 @@
 import { Component, DefaultIterableDiffer, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { MatTableDataSource } from '@angular/material/table'
-import { ProductInventory, ProductInventoryColumns } from '../models/ProductInventory'
-import { WholeSaleService } from '../services/wholesale.service'
-import { YourDialogComponent } from '../../your.dialog.component'
+import { ProductInventory, ProductInventoryColumns } from '../tables/models/ProductInventory'
+import { WholeSaleService } from '../tables/services/wholesale.service'
+import { YourDialogComponent } from '../your.dialog.component'
 
 
 @Component({
   selector: 'inventoryTable',
-  templateUrl: './inventoryTable.component.html',
+  templateUrl: './about.component.html',
   styleUrls: ['../../app.component.scss'],
 })
-export class InventoryTableComponent {
+export class AboutComponent {
     displayedColumns: string[] = ProductInventoryColumns.map((col) => col.key)
   columnsSchema: any = ProductInventoryColumns
   dataSource = new MatTableDataSource<ProductInventory>()

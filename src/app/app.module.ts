@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [
@@ -26,8 +28,9 @@ import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.
     MatCheckboxModule,
     MatDialogModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
-  declarations: [AppComponent, InventoryTableComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
