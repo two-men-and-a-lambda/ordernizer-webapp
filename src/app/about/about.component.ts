@@ -9,7 +9,7 @@ import { YourDialogComponent } from '../your.dialog.component'
 @Component({
   selector: 'inventoryTable',
   templateUrl: './about.component.html',
-  styleUrls: ['../../app.component.scss'],
+  styleUrls: ['../app.component.scss'],
 })
 export class AboutComponent {
     displayedColumns: string[] = ProductInventoryColumns.map((col) => col.key)
