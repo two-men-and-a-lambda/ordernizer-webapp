@@ -11,9 +11,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+
+
+
 import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './about/about.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   imports: [
@@ -29,8 +35,11 @@ import { AboutComponent } from './about/about.component';
     MatDialogModule,
     HttpClientModule,
     AppRoutingModule,
+    MatToolbarModule,
+    MatIconModule
+    
   ],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
