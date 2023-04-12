@@ -20,6 +20,8 @@ import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './about/about.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatIconModule
     
   ],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
