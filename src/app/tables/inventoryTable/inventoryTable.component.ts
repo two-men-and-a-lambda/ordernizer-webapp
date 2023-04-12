@@ -26,6 +26,7 @@ export class InventoryTableComponent {
   ngOnInit() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
+      console.log(this.dataSource.data);
     })
   }
 

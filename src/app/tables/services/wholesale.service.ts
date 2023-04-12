@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { ProductInventory } from '../models/ProductInventory';
 import { map } from 'rxjs/operators';
+import { Table } from '../models/table';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +17,10 @@ export class WholeSaleService {
       .get(`${this.serviceUrl}table`)
       .pipe<ProductInventory[]>(map((data: any) => data.totals));
   }
-  getTable(): Observable<ProductInventory[]> {
+  getTable(): Observable<Table[]> {
     return this.http
-      .get(`${this.serviceUrl}table`)
-      .pipe<ProductInventory[]>(map((data: any) => data.totals));
+      .get(`${this.serviceUrl}get_retail_input`)
+      .pipe<Table[]>(map((data: any) => data));
   }
 
   postInventory(inventory: ProductInventory[]): Observable<ProductInventory[]> {
