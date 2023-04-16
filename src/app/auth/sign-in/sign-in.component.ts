@@ -3,10 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
 import { environment } from 'src/environments/environment';
-import * as sha256  from 'crypto-js/sha256';
-import * as hmacSHA512  from 'crypto-js/hmac-sha512';
-import * as Base64 from 'crypto-js/enc-base64';
-
 
 @Component({
   selector: 'app-sign-in',
@@ -25,27 +21,13 @@ export class SignInComponent implements OnInit {
   onSignIn(form: NgForm){
     if (form.valid) {
       this.isLoading = true;
-
-      const username= this.email_address;
-      const clientId= environment.cognitoAppClientId // Your client id here
-      const client_secret = environment.COGNITO_CLIENT_SECRET;
-
-      const hashDigest = sha256(client_secret);
-      const hmac = hmacSHA512(hashDigest, `${username}${clientId}`)
-      const secretHash = Base64.stringify(hmac);
-
       let authenticationDetails = new AuthenticationDetails({
-          Username: username,
+          Username: this.email_address,
           Password: this.password,
-          ValidationData: {SecretHash: secretHash}
-
-          
       });
       let poolData = {
         UserPoolId: environment.cognitoUserPoolId, // Your user pool id here
-        ClientId: clientId, // Your client id here
-        SecretHash: secretHash
-
+        ClientId: environment.cognitoAppClientId // Your client id here
       };
 
       let userPool = new CognitoUserPool(poolData);
@@ -53,12 +35,21 @@ export class SignInComponent implements OnInit {
       var cognitoUser = new CognitoUser(userData);
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
+          alert('Sign in succesful')
           this.router.navigate(["home"])
         },
         onFailure: (err) => {
           alert(err.message || JSON.stringify(err));
           this.isLoading = false;
         },
+        newPasswordRequired: function(userAttributes, requiredAttributes) {
+          // User was signed up by an admin and must provide new
+          // password and required attributes, if any, to complete
+          // authentication.
+
+          // the api doesn't accept this field back
+          alert('Password needs to be reset. Check email for reset link.')
+      }
       });
     }
   }

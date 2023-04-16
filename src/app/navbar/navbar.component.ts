@@ -3,6 +3,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
+import { AuthService } from '../auth/auth.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +16,20 @@ import { environment } from 'src/environments/environment';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn()
+  }
+
+  onClickLogin(): void {
+    if (this.isLoggedIn()){
+      this.onLogout()
+    }
+    else{
+      this.router.navigate(["login"])
+    }
+  }
 
   onLogout(): void {
     let poolData = {
@@ -25,7 +39,7 @@ export class NavbarComponent {
     let userPool = new CognitoUserPool(poolData);
     let cognitoUser = userPool.getCurrentUser();
     cognitoUser?.signOut();
-    this.router.navigate(["signin"])
+    this.router.navigate(["login"])
   }
   
 }

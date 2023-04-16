@@ -12,8 +12,11 @@
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
         <mat-icon>call</mat-icon>
       </button>
-      <button [routerLink]="'login'" mat-button class="login-button" aria-label="Example icon-button with share icon">
+      <button (click)="onClickLogin()" *ngIf="(!isLoggedIn())" mat-button class="login-button" aria-label="Example icon-button with share icon">
         <span>Login</span>
+      </button>
+      <button (click)="onClickLogin()" *ngIf="(isLoggedIn())" mat-button class="logout-button" aria-label="Example icon-button with share icon">
+        <span>Logout</span>
       </button>
       
     </mat-toolbar>
