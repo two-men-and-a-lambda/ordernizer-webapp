@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table'
 import { ProductInventory, ProductInventoryColumns } from '../models/ProductInventory'
 import { WholeSaleService } from '../services/wholesale.service'
 import { YourDialogComponent } from '../../your.dialog.component'
+import { MatSortModule } from '@angular/material/sort';
+
 
 
 @Component({
@@ -12,7 +14,7 @@ import { YourDialogComponent } from '../../your.dialog.component'
   styleUrls: ['../../app.component.scss'],
 })
 export class InventoryTableComponent {
-    displayedColumns: string[] = ProductInventoryColumns.map((col) => col.key)
+  displayedColumns: string[] = ProductInventoryColumns.map((col) => col.key)
   columnsSchema: any = ProductInventoryColumns
   dataSource = new MatTableDataSource<ProductInventory>()
   valid: any = {}
@@ -21,12 +23,11 @@ export class InventoryTableComponent {
   editShipment: boolean = false
   editSale: boolean = false
 
-  constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
+  constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) { }
 
   ngOnInit() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
-      console.log(this.dataSource.data);
     })
   }
 
@@ -37,12 +38,31 @@ export class InventoryTableComponent {
     })
   }
 
-  submitPending() {
-    this.editPending = !this.editPending
-    this.dataSource.data.forEach(function (row) {
-      console.log(row['pending'])
-    });
+  isNewSales(): boolean {
+    for (let row of this.dataSource.data) {
+      if (row.isSaleSelected) {
+        return true
+      }
+    };
+    return false
   }
+
+  isNewShipments(): boolean {
+
+    for (let row of this.dataSource.data) {
+      if (row.isShipmentSelected) {
+        return true
+      }
+    };
+    return false
+  }
+
+  enterSale(row: ProductInventory, quantity: number, price: number, date: string){
+    row.isSaleSelected = !row.isSaleSelected
+    row.sale= quantity + " x$" + price + " @" + date
+  }
+
+
   submitShipment() {
     this.editShipment = !this.editShipment
     this.dataSource.data.forEach(function (row) {
@@ -69,26 +89,10 @@ export class InventoryTableComponent {
   editRow(row: ProductInventory) {
     if (row.wholesaleId === 0) {
       console.log('add row')
-      }
+    }
     else {
       console.log('edit row')
     }
-  }
-
-  addRow() {
-    let new_F_Date: Date = new Date();
-    // Converting date to string
-    let result: string = new_F_Date.toLocaleString();
-    /**const newRow: ProductInventory = {
-      isSelected: false,
-      businessID: -1
-      
-    }
-    this.dataSource.data = [newRow, ...this.dataSource.data]**/
-  }
-
-  removeRow(id: number) {
-    console.log('remove row')
   }
 
 

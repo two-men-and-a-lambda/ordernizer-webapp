@@ -1,16 +1,9 @@
 <article class="table-header">
     <div>
-      <i>All orders</i>
-    </div>
-    <div>
-      <button class="button-remove-rows" mat-button (click)="addRow()">
-        Record Orders
-      </button>
-      <button class="button-add-row" mat-button (click)="addRow()">
-        Records Sales
-      </button>
+      <i>View And Modify Inventory</i>
     </div>
   </article>
+  <div class="outerDiv">
   <div class="tableContainer">
   <table mat-table [dataSource]="dataSource">
     <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
@@ -18,25 +11,22 @@
       <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
   
         <div class="edit-header" *ngSwitchCase="'units_remaining'">
-          <button class='editButton' mat-button (click)="editStock = !editStock">
+          <button class='editButton' mat-button >
             In Stock
+          </button>
+          <button mat-icon-button class="example-icon" (click)="editStock = !editStock" aria-label="Example icon-button with heart icon">
+            <mat-icon>edit</mat-icon>
           </button>
         </div>
         <div class="edit-header" *ngSwitchCase="'pending'">
-          <button mat-button mat-button (click)="editPending = !editPending">
+          <button mat-button mat-button >
             Pending
           </button>
-        </div>
-        <div class="edit-header" *ngSwitchCase="'shipment'">
-          <button mat-button mat-button (click)="editShipment = !editShipment">
-            Enter Shipment
+          <button mat-icon-button class="example-icon" (click)="editPending = !editPending" aria-label="Example icon-button with heart icon">
+            <mat-icon>edit</mat-icon>
           </button>
         </div>
-        <div class="edit-header" *ngSwitchCase="'sale'">
-          <button mat-button mat-button (click)="editSale = !editSale">
-            Enter Sale
-          </button>
-        </div>
+        
         <span *ngSwitchDefault>{{ col.label }}</span>
       </th>
   
@@ -55,19 +45,20 @@
           </span>
         </div>
   
-        <div [ngSwitch]="col.key" *ngIf="!editPending">
-          <span *ngSwitchCase="'pending'">
-            {{ element[col.key] }}
-          </span>
+        <div [ngSwitch]="col.key" *ngIf="!element.isShipmentSelected">
+          <button mat-button mat-button (click)="element.isShipmentSelected = !element.isShipmentSelected"       *ngSwitchCase="'isShipmentSelected'">
+            Enter Shipment
+          </button>
         </div>
-        <div [ngSwitch]="col.key" *ngIf="!editShipment">
-          <span *ngSwitchCase="'shipment'">
-            {{ element[col.key] }}
-          </span>
+
+        <div [ngSwitch]="col.key" *ngIf="!element.isSaleSelected && element.sale == ''">
+          <button mat-button mat-button (click)="element.isSaleSelected = !element.isSaleSelected"       *ngSwitchCase="'isSaleSelected'">
+            Enter Sale
+          </button>
         </div>
-        <div [ngSwitch]="col.key" *ngIf="!editSale">
-          <span *ngSwitchCase="'sale'">
-            {{ element[col.key] }}
+        <div [ngSwitch]="col.key" *ngIf="!(element.sale == '')">
+          <span *ngSwitchCase="'isSaleSelected'">
+            {{element.sale}}
           </span>
         </div>
   
@@ -85,32 +76,42 @@
   
         </div>
   
-        <div [ngSwitch]="col.key" *ngIf="editPending">
-          <div *ngSwitchCase="'pending'">
-            <mat-form-field class="form-input" *ngSwitchCase="'pending'">
+        <div [ngSwitch]="col.key" *ngIf="element.isShipmentSelected">
+          <div       *ngSwitchCase="'isShipmentSelected'">
+            <mat-form-field class="form-input"       *ngSwitchCase="'isShipmentSelected'">
               <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
                 [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
             </mat-form-field>
         </div>
         </div>
-        <div [ngSwitch]="col.key" *ngIf="editShipment">
-          <div *ngSwitchCase="'shipment'">
-            <mat-form-field class="form-input" *ngSwitchCase="'shipment'">
+        <div [ngSwitch]="col.key" *ngIf="element.isSaleSelected">
+          <div class="sale-form"       *ngSwitchCase="'isSaleSelected'">
+            <mat-form-field class="form-input"       *ngSwitchCase="'isSaleSelected'">
+              <mat-label># sold</mat-label>
               <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
+                [(ngModel)]="element[col.quantity]" (change)="inputHandler($event, element.id, col.quantity)" />
             </mat-form-field>
-        </div>
-        </div>
-        <div [ngSwitch]="col.key" *ngIf="editSale">
-          <div *ngSwitchCase="'sale'">
-            <mat-form-field class="form-input" *ngSwitchCase="'sale'">
+
+            <mat-form-field class="form-input"       *ngSwitchCase="'isSaleSelected'">
+              <mat-label>Price $</mat-label>
               <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
+                [(ngModel)]="element[col.secondary]" (change)="inputHandler($event, element.id, col.price)" />
             </mat-form-field>
-            <mat-form-field class="form-input" *ngSwitchCase="'sale'">
-              <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                [(ngModel)]="element[col.secondary]" (change)="inputHandler($event, element.id, col.secondary)" />
+            <mat-form-field class="form-input"       *ngSwitchCase="'isSaleSelected'" appearance="fill">
+              <mat-label></mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="element[col.date]" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+            <div class="vert-button-div">
+              <button mat-button       *ngSwitchCase="'isSaleSelected'" (click)="element.isSaleSelected = !element.isSaleSelected" [disabled]="disableSubmit(element.id)">
+                Cancel
+              </button>
+              <button mat-button       *ngSwitchCase="'isSaleSelected'" (click)="enterSale(element, col.quantity, col.price, col.date)" [disabled]="disableSubmit(element.id)">
+                Done
+              </button>
+            </div>
+            
         </div>
 
         </div>
@@ -150,29 +151,15 @@
           </button>
         </div>
   
-        <div [ngSwitch]="col.key" *ngIf="editPending">
-          <button mat-button mat-button (click)="editPending = !editPending" *ngSwitchCase="'pending'">
-            Cancel
-          </button>
-          <button mat-button (click)="submitPending()" *ngSwitchCase="'pending'">
-            Done
-          </button>
-        </div>
 
-        <div [ngSwitch]="col.key" *ngIf="editShipment">
-          <button mat-button mat-button (click)="editShipment = !editShipment" *ngSwitchCase="'shipment'">
-            Cancel
-          </button>
-          <button mat-button (click)="submitShipment()" *ngSwitchCase="'shipment'">
-            Done
+        <div [ngSwitch]="col.key" *ngIf="isNewShipments()">
+          <button mat-button (click)="submitShipment()"       *ngSwitchCase="'isShipmentSelected'">
+            Submit Shipments
           </button>
         </div>
-        <div [ngSwitch]="col.key" *ngIf="editSale">
-          <button mat-button mat-button (click)="editSale = !editSale" *ngSwitchCase="'sale'">
-            Cancel
-          </button>
-          <button mat-button (click)="submitSale()" *ngSwitchCase="'sale'">
-            Done
+        <div [ngSwitch]="col.key" *ngIf="isNewSales()">
+          <button mat-button (click)="submitSale()"       *ngSwitchCase="'isSaleSelected'">
+            Submit Sales
           </button>
         </div>
       </td>
@@ -184,3 +171,4 @@
   
   </table>
   </div>
+</div>
