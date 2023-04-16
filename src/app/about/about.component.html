@@ -1,0 +1,45 @@
+
+  <div class="tableContainer">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+        <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
+            <span *ngSwitchDefault>{{ col.label }}</span>
+        </th>
+        <td mat-cell *matCellDef="let element">
+            <div [ngSwitch]="col.key">
+  
+                <span *ngSwitchCase="'product'">
+                  {{ element[col.key] }}
+                </span>
+        
+              </div>
+              <div [ngSwitch]="col.key">
+  
+                <span *ngSwitchCase="'price'">
+                  {{ element[col.key] }}
+                </span>
+        
+              </div>
+              <div [ngSwitch]="col.key">
+  
+                <span *ngSwitchCase="'units'">
+                  {{ element[col.key] }}
+                </span>
+        
+              </div>
+              <div [ngSwitch]="col.key">
+  
+                <span *ngSwitchCase="'timestamp'">
+                  {{ element[col.key] }}
+                </span>
+        
+              </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef> 
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  
+  </table>
+  </div>

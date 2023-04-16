@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MatTableDataSource } from '@angular/material/table'
 import { ProductInventory, ProductInventoryColumns } from '../models/ProductInventory'
 import { WholeSaleService } from '../services/wholesale.service'
+import { YourDialogComponent } from '../../your.dialog.component'
 
 
 @Component({
@@ -17,12 +18,15 @@ export class InventoryTableComponent {
   valid: any = {}
   editStock: boolean = false
   editPending: boolean = false
+  editShipment: boolean = false
+  editSale: boolean = false
 
   constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
 
   ngOnInit() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
+      console.log(this.dataSource.data);
     })
   }
 
@@ -37,6 +41,28 @@ export class InventoryTableComponent {
     this.editPending = !this.editPending
     this.dataSource.data.forEach(function (row) {
       console.log(row['pending'])
+    });
+  }
+  submitShipment() {
+    this.editShipment = !this.editShipment
+    this.dataSource.data.forEach(function (row) {
+      console.log(row['shipment'])
+    });
+  }
+  submitSale() {
+    this.editSale = !this.editSale
+    this.wholeSaleService.postSale(this.dataSource.data).subscribe((res: any) => {
+      this.dataSource.data = res
+    })
+    const dialogRef = this.dialog.open(YourDialogComponent);
+
+    /* 
+      Handles what happens after the modal dialog is closed
+    */
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('nice');
+      }
     });
   }
 

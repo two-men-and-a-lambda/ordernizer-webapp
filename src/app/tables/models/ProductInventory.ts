@@ -5,6 +5,9 @@ export interface ProductInventory {
   units_remaining: number;
   pending: number;
   orderdate: string;
+  shipment: string;
+  sale: string
+  secondary: number
 }
 
 export const ProductInventoryColumns = [
@@ -29,5 +32,20 @@ export const ProductInventoryColumns = [
     required: true,
     width: 60
   },
+  {
+    key: 'shipment',
+    type: 'number',
+    label: 'Shipment',
+    required: true,
+    width: 60
+  },
+  {
+    key: 'sale',
+    secondary: 'secondary',
+    type: 'number',
+    label: 'Sale',
+    required: true,
+    width: 60
+  }
   
 ];
