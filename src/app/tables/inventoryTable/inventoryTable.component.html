@@ -22,11 +22,6 @@
             In Stock
           </button>
         </div>
-        <div class="edit-header" *ngSwitchCase="'pending'">
-          <button mat-button mat-button (click)="editPending = !editPending">
-            Pending
-          </button>
-        </div>
         <div class="edit-header" *ngSwitchCase="'shipment'">
           <button mat-button mat-button (click)="editShipment = !editShipment">
             Enter Shipment
@@ -44,19 +39,20 @@
         <div [ngSwitch]="col.key">
   
           <span *ngSwitchCase="'product'">
-            {{ element[col.key] }}
+            
+            <div *ngIf="editing && element[col.prod_secondary];else other_content">
+              <mat-form-field class="form-input">
+                <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
+                  [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
+              </mat-form-field>
+            </div>
+            <ng-template #other_content>{{ element[col.key] }}</ng-template>
           </span>
   
         </div>
   
         <div [ngSwitch]="col.key" *ngIf="!editStock">
           <span *ngSwitchCase="'units_remaining'">
-            {{ element[col.key] }}
-          </span>
-        </div>
-  
-        <div [ngSwitch]="col.key" *ngIf="!editPending">
-          <span *ngSwitchCase="'pending'">
             {{ element[col.key] }}
           </span>
         </div>
@@ -76,28 +72,16 @@
             <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
               [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
           </mat-form-field>
-          
-  
-          <!--<<mat-form-field class="form-input" *ngSwitchCase="'units_remaining'">
-            <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-              [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
-          </mat-form-field>-->
-  
-        </div>
-  
-        <div [ngSwitch]="col.key" *ngIf="editPending">
-          <div *ngSwitchCase="'pending'">
-            <mat-form-field class="form-input" *ngSwitchCase="'pending'">
-              <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
-            </mat-form-field>
-        </div>
         </div>
         <div [ngSwitch]="col.key" *ngIf="editShipment">
           <div *ngSwitchCase="'shipment'">
             <mat-form-field class="form-input" *ngSwitchCase="'shipment'">
               <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
                 [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
+            </mat-form-field>
+            <mat-form-field class="form-input" *ngSwitchCase="'shipment'">
+              <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
+                [(ngModel)]="element[col.ship_secondary]" (change)="inputHandler($event, element.id, col.ship_secondary)" />
             </mat-form-field>
         </div>
         </div>
@@ -114,30 +98,6 @@
         </div>
 
         </div>
-  
-        <div [ngSwitch]="col.type" *ngIf="element.isEdit">
-          
-          <div *ngSwitchCase="'isSelected'"></div>
-  
-          <div class="btn-edit" *ngSwitchCase="'isEdit'">
-            <button mat-button *ngSwitchCase="'pending'" (click)="editRow(element)" [disabled]="disableSubmit(element.id)">
-              Done
-            </button>
-          </div>
-  
-          <mat-form-field class="form-input" *ngSwitchCase="'date'" appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="element[col.key]" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-  
-          <mat-form-field class="form-input" *ngSwitchDefault>
-            <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-              [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
-          </mat-form-field>
-  
-        </div>
       </td>
   
       <td mat-footer-cell *matFooterCellDef> 
@@ -149,22 +109,15 @@
             Done
           </button>
         </div>
-  
-        <div [ngSwitch]="col.key" *ngIf="editPending">
-          <button mat-button mat-button (click)="editPending = !editPending" *ngSwitchCase="'pending'">
-            Cancel
-          </button>
-          <button mat-button (click)="submitPending()" *ngSwitchCase="'pending'">
-            Done
-          </button>
-        </div>
-
         <div [ngSwitch]="col.key" *ngIf="editShipment">
-          <button mat-button mat-button (click)="editShipment = !editShipment" *ngSwitchCase="'shipment'">
+          <button mat-button mat-button (click)="cancel()" *ngSwitchCase="'shipment'">
             Cancel
           </button>
           <button mat-button (click)="submitShipment()" *ngSwitchCase="'shipment'">
             Done
+          </button>
+          <button mat-button (click)="addRow()" *ngSwitchCase="'shipment'">
+            Add Item
           </button>
         </div>
         <div [ngSwitch]="col.key" *ngIf="editSale">

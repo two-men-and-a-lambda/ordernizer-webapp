@@ -1,4 +1,20 @@
 
+  <div>
+    <div>
+      <button class="button-remove-rows" mat-button (click)="getTable('retail_input')">
+        Retail Input
+      </button>
+      <button class="button-add-row" mat-button (click)="getTable('retail_output')">
+        Retail Output
+      </button>
+      <button class="button-remove-rows" mat-button (click)="getTable('wholesale_input')">
+        Wholesale Input
+      </button>
+      <button class="button-add-row" mat-button (click)="getTable('wholesale_output')">
+        Wholesale Output
+      </button>
+    </div>
+    <h2>{{ table_name }}</h2>
   <div class="tableContainer">
   <table mat-table [dataSource]="dataSource">
     <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
@@ -43,3 +59,4 @@
   
   </table>
   </div>
+</div>

@@ -16,13 +16,21 @@ export class AboutComponent {
   columnsSchema: any = TableColumns
   dataSource = new MatTableDataSource<Table>()
   valid: any = {}
+  table_name: string = 'retail_input'
 
   constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
 
   ngOnInit() {
-    this.wholeSaleService.getTable().subscribe((res: any) => {
+    this.wholeSaleService.getTable('retail_input').subscribe((res: any) => {
       this.dataSource.data = res
       console.log(this.dataSource.data);
     })
   }
+  getTable(table: string) {
+    this.wholeSaleService.getTable(table).subscribe((res: any) => {
+      this.dataSource.data = res
+      console.log(this.dataSource.data);
+      this.table_name = table;
+  })
+}
 }

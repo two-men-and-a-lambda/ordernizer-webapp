@@ -3,17 +3,19 @@ export interface ProductInventory {
   wholesaleId: number;
   product: string;
   units_remaining: number;
-  pending: number;
   orderdate: string;
   shipment: string;
-  sale: string
+  sale: number;
   secondary: number
+  ship_secondary: number
+  prod_secondary: Boolean
 }
 
 export const ProductInventoryColumns = [
   {
     key: 'product',
-    type: 'number',
+    prod_secondary: 'prod_secondary',
+    type: 'string',
     label: 'Product',
     required: true,
 
@@ -26,14 +28,8 @@ export const ProductInventoryColumns = [
     width: 60
   },
   {
-    key: 'pending',
-    type: 'number',
-    label: 'Pending',
-    required: true,
-    width: 60
-  },
-  {
     key: 'shipment',
+    ship_secondary: 'ship_secondary',
     type: 'number',
     label: 'Shipment',
     required: true,

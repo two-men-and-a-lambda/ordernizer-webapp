@@ -17,9 +17,9 @@ export class WholeSaleService {
       .get(`${this.serviceUrl}table`)
       .pipe<ProductInventory[]>(map((data: any) => data.totals));
   }
-  getTable(): Observable<Table[]> {
+  getTable(table: string): Observable<Table[]> {
     return this.http
-      .get(`${this.serviceUrl}get_retail_input`)
+      .get(`${this.serviceUrl}get_${table}`)
       .pipe<Table[]>(map((data: any) => data));
   }
 
@@ -45,6 +45,18 @@ export class WholeSaleService {
     data['timestamp'] = new Date();
     let body = JSON.stringify(data);
     return this.http.post<ProductInventory[]>(`${this.serviceUrl}submit_sale`, body);
+  }
+
+  postShipment(inventory: ProductInventory[]): Observable<ProductInventory[]> {
+    let data: any={};
+    inventory.forEach((function (row) {
+      let key = row['product'] as string
+      let val = {"price": Number(row['shipment']), "units": Number(row['ship_secondary'])};
+      data[key] = val
+    }))
+    data['timestamp'] = new Date();
+    let body = JSON.stringify(data);
+    return this.http.post<ProductInventory[]>(`${this.serviceUrl}submit_order`, body);
   }
     /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
 

@@ -17,13 +17,16 @@ export class InventoryTableComponent {
   dataSource = new MatTableDataSource<ProductInventory>()
   valid: any = {}
   editStock: boolean = false
-  editPending: boolean = false
   editShipment: boolean = false
   editSale: boolean = false
+  editing: boolean = false
 
   constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
 
   ngOnInit() {
+    this.getTotals();
+  }
+  getTotals() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
       console.log(this.dataSource.data);
@@ -36,17 +39,20 @@ export class InventoryTableComponent {
       this.dataSource.data = res
     })
   }
-
-  submitPending() {
-    this.editPending = !this.editPending
-    this.dataSource.data.forEach(function (row) {
-      console.log(row['pending'])
-    });
-  }
   submitShipment() {
     this.editShipment = !this.editShipment
-    this.dataSource.data.forEach(function (row) {
-      console.log(row['shipment'])
+    this.wholeSaleService.postShipment(this.dataSource.data).subscribe((res: any) => {
+      this.dataSource.data = res
+    })
+    const dialogRef = this.dialog.open(YourDialogComponent);
+
+    /* 
+      Handles what happens after the modal dialog is closed
+    */
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('nice');
+      }
     });
   }
   submitSale() {
@@ -63,7 +69,10 @@ export class InventoryTableComponent {
       if (result) {
         console.log('nice');
       }
+      console.log('oh');
+      this.getTotals();
     });
+    
   }
 
   editRow(row: ProductInventory) {
@@ -79,18 +88,30 @@ export class InventoryTableComponent {
     let new_F_Date: Date = new Date();
     // Converting date to string
     let result: string = new_F_Date.toLocaleString();
-    /**const newRow: ProductInventory = {
-      isSelected: false,
-      businessID: -1
-      
+    const newRow: ProductInventory = {
+      businessId: 0,
+      wholesaleId: 0,
+      product: 'blah',
+      units_remaining: 0,
+      orderdate: 'ahh',
+      shipment: 'ah',
+      sale: 0,
+      secondary: 0,
+      ship_secondary: 0,
+      prod_secondary: true
     }
-    this.dataSource.data = [newRow, ...this.dataSource.data]**/
+    this.editing = true;
+    this.dataSource.data = [newRow, ...this.dataSource.data]
   }
 
   removeRow(id: number) {
     console.log('remove row')
   }
-
+  cancel() {
+    this.editShipment = !this.editShipment;
+    this.editing = !this.editing;
+    this.dataSource.data = this.dataSource.data.slice(1);
+  }
 
 
   inputHandler(e: any, id: number, key: string) {
