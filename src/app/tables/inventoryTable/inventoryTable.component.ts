@@ -23,6 +23,8 @@ export class InventoryTableComponent {
   editShipment: boolean = false
   editSale: boolean = false
 
+  todayDate = new Date()
+
   constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) { }
 
   ngOnInit() {
