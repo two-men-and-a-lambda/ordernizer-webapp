@@ -1,20 +1,22 @@
 
 <div>
   <div>
-    <button class="button-remove-rows" mat-button (click)="getTable('retail_input')">
-      Retail Input
-    </button>
-    <button class="button-add-row" mat-button (click)="getTable('retail_output')">
-      Retail Output
-    </button>
-    <button class="button-remove-rows" mat-button (click)="getTable('wholesale_input')">
-      Wholesale Input
-    </button>
-    <button class="button-add-row" mat-button (click)="getTable('wholesale_output')">
-      Wholesale Output
-    </button>
+    <mat-tab-group class="tab-group" (selectedTabChange)="tabClick($event) ">
+      <mat-tab label="Retail Input">  
+        <h2>{{ table_name }}</h2>
+
+      </mat-tab>
+      <mat-tab label="Retail Output">
+        <h2>{{ table_name }}</h2>
+      </mat-tab>
+      <mat-tab label="Wholesale Input"> 
+        <h2>{{ table_name }}</h2>
+      </mat-tab>
+      <mat-tab label="Wholesale Output"> 
+        <h2>{{ table_name }}</h2>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-  <h2>{{ table_name }}</h2>
 <div class="tableContainer">
 <table mat-table [dataSource]="dataSource">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">

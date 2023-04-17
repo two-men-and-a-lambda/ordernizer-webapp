@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -38,7 +39,8 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     HttpClientModule,
     AppRoutingModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule
     
   ],
   declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent],
