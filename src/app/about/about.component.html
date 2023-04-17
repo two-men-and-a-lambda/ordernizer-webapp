@@ -1,45 +1,62 @@
 
-  <div class="tableContainer">
-  <table mat-table [dataSource]="dataSource">
-    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-        <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
-            <span *ngSwitchDefault>{{ col.label }}</span>
-        </th>
-        <td mat-cell *matCellDef="let element">
-            <div [ngSwitch]="col.key">
-  
-                <span *ngSwitchCase="'product'">
-                  {{ element[col.key] }}
-                </span>
-        
-              </div>
-              <div [ngSwitch]="col.key">
-  
-                <span *ngSwitchCase="'price'">
-                  {{ element[col.key] }}
-                </span>
-        
-              </div>
-              <div [ngSwitch]="col.key">
-  
-                <span *ngSwitchCase="'units'">
-                  {{ element[col.key] }}
-                </span>
-        
-              </div>
-              <div [ngSwitch]="col.key">
-  
-                <span *ngSwitchCase="'timestamp'">
-                  {{ element[col.key] }}
-                </span>
-        
-              </div>
-        </td>
-        <td mat-footer-cell *matFooterCellDef> 
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  
-  </table>
+<div>
+  <div>
+    <button class="button-remove-rows" mat-button (click)="getTable('retail_input')">
+      Retail Input
+    </button>
+    <button class="button-add-row" mat-button (click)="getTable('retail_output')">
+      Retail Output
+    </button>
+    <button class="button-remove-rows" mat-button (click)="getTable('wholesale_input')">
+      Wholesale Input
+    </button>
+    <button class="button-add-row" mat-button (click)="getTable('wholesale_output')">
+      Wholesale Output
+    </button>
   </div>
+  <h2>{{ table_name }}</h2>
+<div class="tableContainer">
+<table mat-table [dataSource]="dataSource">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+      <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
+          <span *ngSwitchDefault>{{ col.label }}</span>
+      </th>
+      <td mat-cell *matCellDef="let element">
+          <div [ngSwitch]="col.key">
+
+              <span *ngSwitchCase="'product'">
+                {{ element[col.key] }}
+              </span>
+      
+            </div>
+            <div [ngSwitch]="col.key">
+
+              <span *ngSwitchCase="'price'">
+                {{ element[col.key] }}
+              </span>
+      
+            </div>
+            <div [ngSwitch]="col.key">
+
+              <span *ngSwitchCase="'units'">
+                {{ element[col.key] }}
+              </span>
+      
+            </div>
+            <div [ngSwitch]="col.key">
+
+              <span *ngSwitchCase="'timestamp'">
+                {{ element[col.key] }}
+              </span>
+      
+            </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef> 
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+</table>
+</div>
+</div>
