@@ -11,9 +11,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.component';
@@ -38,10 +38,11 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     HttpClientModule,
     AppRoutingModule,
     MatToolbarModule,
-    MatIconModule
-    
+    MatIconModule,
+    MatTabsModule
+
   ],
   declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

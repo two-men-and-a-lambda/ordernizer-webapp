@@ -1,0 +1,16 @@
+.tab-group{
+    color: gray;
+    accent-color: gray;
+}
+
+.tableContainer{
+    height: 600px;
+}
+
+app-child .mat-tab-label{
+    color:gray;
+    min-width: 24px !important;
+    padding: 5px;
+       background-color:transparent;
+        font-weight: 700;
+  }
