@@ -1,9 +1,28 @@
-<form (submit)="onSignIn(signInForm)" #signInForm="ngForm">
-    <label for="email"><b>Email address</b></label>
-    <input name="email" ngModel type="email" #emailInput="ngModel" [(ngModel)]="email_address" email placeholder="Enter Username" required>
-  
-    <label for="password"><b>Password</b></label>
-    <input [(ngModel)]="password" ngModel type="password" minlength="8" #passwordInput="ngModel" required name="password" placeholder="Enter Password" >
-  
-    <button type="submit">Login</button>
-</form>  
+<form (submit)="onSignIn(signInForm)" #signInForm="ngForm"
+    class="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+    <main class="pa4 black-80">
+        <div class="measure">
+            <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+                <legend class="f3 fw4 ph1 mh1">Sign In</legend>
+                <div class="mt3">
+                    <label for="email" class="db fw6 lh-copy f6"><b>Email address</b></label>
+                    <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" name="email"
+                        ngModel type="email" #emailInput="ngModel" [(ngModel)]="email_address" email
+                        placeholder="Enter Username" required>
+                </div>
+
+                <div class="mv3">
+                    <label class="db fw6 lh-copy f6" for="password"><b>Password</b></label>
+                    <input class="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                        [(ngModel)]="password" ngModel type="password" minlength="8" #passwordInput="ngModel" required
+                        name="password" placeholder="Enter Password">
+                </div>
+
+            </fieldset>
+            <button class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                type="submit">Login</button>
+        </div>
+
+    </main>
+
+</form>

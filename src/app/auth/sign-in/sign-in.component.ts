@@ -18,12 +18,12 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onSignIn(form: NgForm){
+  onSignIn(form: NgForm) {
     if (form.valid) {
       this.isLoading = true;
       let authenticationDetails = new AuthenticationDetails({
-          Username: this.email_address,
-          Password: this.password,
+        Username: this.email_address,
+        Password: this.password,
       });
       let poolData = {
         UserPoolId: environment.cognitoUserPoolId, // Your user pool id here
@@ -42,14 +42,14 @@ export class SignInComponent implements OnInit {
           alert(err.message || JSON.stringify(err));
           this.isLoading = false;
         },
-        newPasswordRequired: function(userAttributes, requiredAttributes) {
+        newPasswordRequired: function (userAttributes, requiredAttributes) {
           // User was signed up by an admin and must provide new
           // password and required attributes, if any, to complete
           // authentication.
 
           // the api doesn't accept this field back
           alert('Password needs to be reset. Check email for reset link.')
-      }
+        }
       });
     }
   }
