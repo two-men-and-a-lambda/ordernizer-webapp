@@ -42,37 +42,49 @@ export class InventoryTableComponent {
 
   isNewSales(): boolean {
     for (let row of this.dataSource.data) {
-      if (row.isSaleSelected) {
+      if (row.saleQuantity && !row.isSaleSelected) {
         return true
       }
     };
     return false
   }
+
 
   isNewShipments(): boolean {
 
     for (let row of this.dataSource.data) {
-      if (row.isShipmentSelected) {
+      if (row.shipmentQuantity && !row.isShipmentSelected) {
         return true
       }
     };
     return false
   }
 
-  enterSale(row: ProductInventory, quantity: number, price: number, date: string){
+  enterSale(row: ProductInventory){
     row.isSaleSelected = !row.isSaleSelected
-    row.sale= quantity + " x$" + price + " @" + date
+    /*row.sale= quantity + " x$" + price + " @" + date*/
   }
 
+  enterShipment(row: ProductInventory){
+    row.isShipmentSelected = !row.isShipmentSelected
+    /*row.sale= quantity + " x$" + price + " @" + date*/
+  }
+
+  dateString(d: Date){
+    var month = d.getUTCMonth() + 1; //months from 1-12
+    var day = d.getUTCDate();
+    var year = d.getUTCFullYear();
+
+    return month + "/" + day + "/" + year;
+  }
 
   submitShipment() {
     this.editShipment = !this.editShipment
     this.dataSource.data.forEach(function (row) {
-      console.log(row['shipment'])
+      console.log(row)
     });
   }
   submitSale() {
-    this.editSale = !this.editSale
     this.wholeSaleService.postSale(this.dataSource.data).subscribe((res: any) => {
       this.dataSource.data = res
     })

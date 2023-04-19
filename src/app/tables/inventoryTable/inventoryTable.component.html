@@ -47,71 +47,71 @@
             </span>
           </div>
 
-          <div [ngSwitch]="col.key" *ngIf="!element.isShipmentSelected">
+          <div [ngSwitch]="col.key" *ngIf="!element.isShipmentSelected && !element.shipmentQuantity && !isNewSales()">
             <button mat-button mat-button (click)="element.isShipmentSelected = !element.isShipmentSelected"
               *ngSwitchCase="'isShipmentSelected'">
               Enter Shipment
             </button>
           </div>
+          <div [ngSwitch]="col.key" *ngIf="!element.isShipmentSelected && element.shipmentQuantity">
+            <span *ngSwitchCase="'isShipmentSelected'">
+              {{'$' + element.shipmentPrice + ' x' + element.shipmentQuantity + ' @' + dateString(element.shipmentDate)}}
+            </span>
+          </div>
 
-          <div [ngSwitch]="col.key" *ngIf="!element.isSaleSelected && element.sale == ''">
+          <div [ngSwitch]="col.key" *ngIf="!element.isSaleSelected && !element.saleQuantity && !isNewShipments()">
             <button mat-button mat-button (click)="element.isSaleSelected = !element.isSaleSelected"
               *ngSwitchCase="'isSaleSelected'">
               Enter Sale
             </button>
           </div>
-          <div [ngSwitch]="col.key" *ngIf="!(element.sale == '')">
+          <div [ngSwitch]="col.key" *ngIf="!element.isSaleSelected && element.saleQuantity">
             <span *ngSwitchCase="'isSaleSelected'">
-              {{element.sale}}
+              {{'$' +element.salePrice + ' x' + element.saleQuantity + ' @' + dateString(element.saleDate)}}
             </span>
           </div>
 
-          <div [ngSwitch]="col.key" *ngIf="editStock">
-            <mat-form-field class="form-input" *ngSwitchCase="'units_remaining'">
+          <div class="stockBox" [ngSwitch]="col.key" *ngIf="editStock">
+            
+            <mat-form-field *ngSwitchCase="'units_remaining'">
               <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
                 [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
             </mat-form-field>
-
-
-            <!--<<mat-form-field class="form-input" *ngSwitchCase="'units_remaining'">
-            <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-              [(ngModel)]="element[col.key]" (change)="inputHandler($event, element.id, col.key)" />
-          </mat-form-field>-->
 
           </div>
 
           <div [ngSwitch]="col.key" *ngIf="element.isShipmentSelected">
             <div class="sale-form" *ngSwitchCase="'isShipmentSelected'">
               <mat-form-field class="form-input" *ngSwitchCase="'isShipmentSelected'" floatLabel="always">
-                <mat-label># received</mat-label>
+                <mat-label># amount</mat-label>
                 <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                  [(ngModel)]="element[col.quantity]" (change)="inputHandler($event, element.id, col.quantity)" />
+                  [(ngModel)]="element['shipmentQuantity']" (change)="inputHandler($event, element.id, 'shipmentQuantity')" />
               </mat-form-field>
 
               <mat-form-field class="form-input" *ngSwitchCase="'isShipmentSelected'" floatLabel="always">
                 <mat-label>Price</mat-label>
                 <input matInput [required]="col.required" [pattern]="col.pattern" type="text"
-                  [(ngModel)]="element[col.secondary]" (change)="inputHandler($event, element.id, col.price)" />
+                  [(ngModel)]="element['shipmentPrice']" (change)="inputHandler($event, element.id, 'shipmentPrice')" />
                   <span matTextPrefix>$&nbsp;</span>
                 </mat-form-field>
               <mat-form-field class="form-input" *ngSwitchCase="'isShipmentSelected'" appearance="fill" floatLabel="always">
                 <mat-label></mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="element[col.date]" />
+                <input matInput [matDatepicker]="picker" [(ngModel)]="element['shipmentDate']" />
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <div class="vert-button-div">
                 <button mat-button *ngSwitchCase="'isShipmentSelected'"
-                  (click)="element.isShipmentSelected = !element.isShipmentSelected" [disabled]="disableSubmit(element.id)">
+                  (click)="element.isShipmentSelected = !element.isShipmentSelected; element.shipmentQuantity = null">
                   Cancel
                 </button>
                 <button mat-button *ngSwitchCase="'isShipmentSelected'"
-                  (click)="submitShipment()"
+                  (click)="enterShipment(element)"
                   [disabled]="disableSubmit(element.id)">
                   Done
                 </button>
               </div>
-
+ 
             </div>
           </div>
           <div [ngSwitch]="col.key" *ngIf="element.isSaleSelected">
@@ -119,29 +119,30 @@
               <mat-form-field class="form-input" *ngSwitchCase="'isSaleSelected'" floatLabel="always">
                 <mat-label># sold</mat-label>
                 <input matInput [required]="col.required" [pattern]="col.pattern" [type]="col.type"
-                  [(ngModel)]="element[col.quantity]" (change)="inputHandler($event, element.id, col.quantity)" />
+                  [(ngModel)]="element['saleQuantity']" (change)="inputHandler($event, element.id, 'saleQuantity')" />
               </mat-form-field>
 
               <mat-form-field class="form-input" *ngSwitchCase="'isSaleSelected'" floatLabel="always">
                 <mat-label>Price</mat-label>
                 <input matInput [required]="col.required" [pattern]="col.pattern" type="text"
-                  [(ngModel)]="element[col.secondary]" (change)="inputHandler($event, element.id, col.price)" />
+                  [(ngModel)]="element['salePrice']" (change)="inputHandler($event, element.id, 'salePrice')" />
                   <span matTextPrefix>$&nbsp;</span>
+
 
                 </mat-form-field>
               <mat-form-field class="form-input" *ngSwitchCase="'isSaleSelected'" appearance="fill" floatLabel="always" >
                 <mat-label></mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="element[col.date]" />
+                <input matInput [matDatepicker]="picker" [(ngModel)]="element['saleDate']" />
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <div class="vert-button-div">
                 <button mat-button *ngSwitchCase="'isSaleSelected'"
-                  (click)="element.isSaleSelected = !element.isSaleSelected" [disabled]="disableSubmit(element.id)">
+                  (click)="element.isSaleSelected = !element.isSaleSelected; ; element.saleQuantity= null" [disabled]="disableSubmit(element.id)">
                   Cancel
                 </button>
                 <button mat-button *ngSwitchCase="'isSaleSelected'"
-                  (click)="enterSale(element, col.quantity, col.price, col.date)"
+                  (click)="enterSale(element)"
                   [disabled]="disableSubmit(element.id)">
                   Done
                 </button>

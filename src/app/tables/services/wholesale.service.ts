@@ -39,7 +39,7 @@ export class WholeSaleService {
     let data: any={};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      let val = {"price": Number(row['sale']), "units": Number(row['secondary'])};
+      let val = {"price": Number(row['salePrice']), "units": Number(row['saleQuantity']), "date": row['saleDate']};
       data[key] = val
     }))
     data['timestamp'] = new Date();

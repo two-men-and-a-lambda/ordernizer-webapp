@@ -1,14 +1,21 @@
 export interface ProductInventory {
-  businessId: number;
+  businessId: string;
   wholesaleId: number;
   product: string;
   units_remaining: number;
   orderdate: string;
-  shipment: string;
-  sale: string;
+
   isShipmentSelected: boolean;
+  shipmentQuantity: number;
+  shipmentPrice: number;
+  shipmentDate: Date;
+
+
   isSaleSelected: boolean;
-  secondary: number;
+  saleQuantity : number;
+  salePrice : number;
+  saleDate : Date;
+
   lastSoldPrice: number;
   
 }
