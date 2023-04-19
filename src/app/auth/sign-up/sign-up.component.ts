@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 interface formDataInterface {
   "name": string;
   "family_name": string;
-  "custom:university": string;
   "email": string;
   "phone_number": string;
   [key: string]: string;
@@ -22,9 +21,11 @@ export class SignUpComponent implements OnInit {
   isLoading:boolean = false;
   fname:string = '';
   lname:string = '';
-  university:string = '';
+
   email:string = '';
-  mobileNo:string = '';
+  mobileNo:string = '+1';
+
+  username:string='';
   password:string = '';
 
   constructor(private router: Router) { }
@@ -43,7 +44,6 @@ export class SignUpComponent implements OnInit {
      let formData:formDataInterface = {
        "name": this.fname,
        "family_name": this.lname,
-       "custom:university": this.university,
        "email": this.email,
        "phone_number": this.mobileNo,
      }
@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
        let attribute = new CognitoUserAttribute(attrData);
        attributeList.push(attribute)
      }
-     userPool.signUp(this.email, this.password, attributeList, [], (
+     userPool.signUp(this.username, this.password, attributeList, [], (
        err,
        result
      ) => {
@@ -65,6 +65,7 @@ export class SignUpComponent implements OnInit {
          alert(err.message || JSON.stringify(err));
          return;
        }
+       alert('User created succesfully. Check email for verification link')
        this.router.navigate(['/login']);
      });
     }
