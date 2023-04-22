@@ -46,9 +46,10 @@ export class SignInComponent implements OnInit {
           // User was signed up by an admin and must provide new
           // password and required attributes, if any, to complete
           // authentication.
+          alert('Check email for verification link.')
+
 
           // the api doesn't accept this field back
-          alert('Password needs to be reset. Check email for reset link.')
         }
       });
     }

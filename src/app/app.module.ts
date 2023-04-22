@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -10,7 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -22,6 +23,9 @@ import { AboutComponent } from './about/about.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { LoaderInterceptor } from './tables/services/loader/loader.interceptor';
+import { LoaderComponent } from './tables/services/loader/loader.component';
+
 
 @NgModule({
   imports: [
@@ -39,10 +43,19 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     AppRoutingModule,
     MatToolbarModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxSpinnerModule
 
   ],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent],
+  providers: [
+    {
+       provide: HTTP_INTERCEPTORS,
+       useClass: LoaderInterceptor,
+       multi: true,
+    },
+ ],
+ schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

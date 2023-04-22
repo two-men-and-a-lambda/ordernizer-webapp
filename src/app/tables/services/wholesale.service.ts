@@ -4,6 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { ProductInventory } from '../models/ProductInventory';
 import { map } from 'rxjs/operators';
 import { Table } from '../models/table';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,27 @@ import { Table } from '../models/table';
 export class WholeSaleService {
   private serviceUrl = 'https://f0nk1usvg2.execute-api.us-east-1.amazonaws.com/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
   getTotals(): Observable<ProductInventory[]> {
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}table?user=${user}`
     return this.http
-      .get(`${this.serviceUrl}table`)
+      .get(urlString)
       .pipe<ProductInventory[]>(map((data: any) => data.totals));
   }
   getTable(table: string): Observable<Table[]> {
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}get_${table}?user=${user}`
     return this.http
-      .get(`${this.serviceUrl}get_${table}`)
+      .get(urlString)
       .pipe<Table[]>(map((data: any) => data));
   }
 
   postInventory(inventory: ProductInventory[]): Observable<ProductInventory[]> {
-    let data: any={};
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}submit_inventory?user=${user}`
+
+    let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
       let val = Number(row['units_remaining'])
@@ -32,21 +40,26 @@ export class WholeSaleService {
     }))
     data['timestamp'] = new Date();
     let body = JSON.stringify(data);
-    return this.http.post<ProductInventory[]>(`${this.serviceUrl}submit_inventory`, body);
+    return this.http.post<ProductInventory[]>(urlString, body);
   }
 
   postSale(inventory: ProductInventory[]): Observable<ProductInventory[]> {
-    let data: any={};
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}submit_sale?user=${user}`
+    let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      let val = {"price": Number(row['sale']), "units": Number(row['secondary'])};
-      data[key] = val
+      if (!row['saleQuantity'] == null) {
+        let val = { "price": Number(row['salePrice']), "units": Number(row['saleQuantity']), "date": row['saleDate'] };
+        data[key] = val
+      }
+
     }))
     data['timestamp'] = new Date();
     let body = JSON.stringify(data);
-    return this.http.post<ProductInventory[]>(`${this.serviceUrl}submit_sale`, body);
+    return this.http.post<ProductInventory[]>(urlString, body);
   }
-    /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
+  /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
 
 
 
