@@ -11,7 +11,7 @@ export class AuthService {
 
   getUserID(): string {
 
-    let subToken = ''
+    let userID = ''
 
     let poolData = {
       UserPoolId: environment.cognitoUserPoolId,
@@ -26,10 +26,11 @@ export class AuthService {
         if (err) {
           alert(err.message || JSON.stringify(err));
         }
-        subToken = session.getIdToken().decodePayload().sub
+        let payload = session.getIdToken().decodePayload()
+        userID = payload['cognito:username']
       })
     }
-    return subToken;
+    return userID;
   }
 
 

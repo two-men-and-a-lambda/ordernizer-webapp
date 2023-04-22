@@ -30,13 +30,22 @@ export class InventoryTableComponent {
   ngOnInit() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
+      console.log(this.dataSource)
     })
   }
 
   submitInventory() {
     this.editStock = !this.editStock
     this.wholeSaleService.postInventory(this.dataSource.data).subscribe((res: any) => {
-      this.dataSource.data = res
+      for (let i = 0; i < this.dataSource.data.length; i++) {
+        for (let key in res){
+          if (this.dataSource.data[i]['product'] === key){
+            this.dataSource.data[i]['units_remaining'] = res[key]
+          }
+        }
+      }
+
+      
     })
   }
 
@@ -58,6 +67,16 @@ export class InventoryTableComponent {
       }
     };
     return false
+  }
+  editAllShipment(){
+    for (let row of this.dataSource.data) {
+      row.isShipmentSelected = true
+    }
+  }
+  editAllSale(){
+    for (let row of this.dataSource.data) {
+      row.isSaleSelected = true
+    }
   }
 
   enterSale(row: ProductInventory){

@@ -27,6 +27,26 @@
               aria-label="Example icon-button with heart icon">
               <mat-icon>edit</mat-icon>
             </button>
+          <div class="edit-header" *ngSwitchCase="'units_remaining'">
+              <button class='editButton' mat-button>
+                In Stock
+              </button>
+              <button mat-icon-button class="example-icon" (click)="editStock = !editStock"
+                aria-label="Example icon-button with heart icon">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            
+          </div>
+          <div class="edit-header" *ngSwitchCase="'isShipmentSelected'">
+              <button class='editButton' (click)="editAllShipment()" mat-button>
+                Bulk Edit
+              </button>
+          </div>
+          <div class="edit-header" *ngSwitchCase="'isSaleSelected'">
+            <button class='editButton' (click)="editAllSale()" mat-button>
+              Bulk Edit
+            </button>
           </div>
 
           <span *ngSwitchDefault>{{ col.label }}</span>
