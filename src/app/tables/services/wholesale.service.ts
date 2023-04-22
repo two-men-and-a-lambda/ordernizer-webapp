@@ -11,7 +11,7 @@ import { Table } from '../models/table';
 export class WholeSaleService {
   private serviceUrl = 'https://f0nk1usvg2.execute-api.us-east-1.amazonaws.com/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getTotals(): Observable<ProductInventory[]> {
     return this.http
       .get(`${this.serviceUrl}table`)
@@ -24,7 +24,7 @@ export class WholeSaleService {
   }
 
   postInventory(inventory: ProductInventory[]): Observable<ProductInventory[]> {
-    let data: any={};
+    let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
       let val = Number(row['units_remaining'])
@@ -36,17 +36,20 @@ export class WholeSaleService {
   }
 
   postSale(inventory: ProductInventory[]): Observable<ProductInventory[]> {
-    let data: any={};
+    let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      let val = {"price": Number(row['salePrice']), "units": Number(row['saleQuantity']), "date": row['saleDate']};
-      data[key] = val
+      if (!row['saleQuantity'] == null) {
+        let val = { "price": Number(row['salePrice']), "units": Number(row['saleQuantity']), "date": row['saleDate'] };
+        data[key] = val
+      }
+
     }))
     data['timestamp'] = new Date();
     let body = JSON.stringify(data);
     return this.http.post<ProductInventory[]>(`${this.serviceUrl}submit_sale`, body);
   }
-    /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
+  /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
 
 
 
