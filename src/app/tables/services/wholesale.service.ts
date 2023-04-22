@@ -21,8 +21,10 @@ export class WholeSaleService {
       .pipe<ProductInventory[]>(map((data: any) => data.totals));
   }
   getTable(table: string): Observable<Table[]> {
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}get_${table}?user=${user}`
     return this.http
-      .get(`${this.serviceUrl}get_${table}`)
+      .get(urlString)
       .pipe<Table[]>(map((data: any) => data));
   }
 

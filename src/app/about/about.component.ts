@@ -26,7 +26,7 @@ export class AboutComponent {
   constructor(public dialog: MatDialog, private wholeSaleService: WholeSaleService) {}
 
   ngOnInit() {
-    this.wholeSaleService.getTable('retail_input').subscribe((res: any) => {
+    this.wholeSaleService.getTable('wholesale').subscribe((res: any) => {
       this.dataSource.data = res
       console.log(this.dataSource.data);
     })
@@ -34,18 +34,10 @@ export class AboutComponent {
   tabClick(tab: MatTabChangeEvent){
     switch(tab.index) { 
       case 1: { 
-        this.getTable('retail_output')
+        this.getTable('wholesale')
          break; 
       } 
-      case 2: { 
-        this.getTable('wholesale_input')
-         break; 
-      } 
-      case 3: { 
-        this.getTable('wholesale_output')
 
-        break; 
-     } 
       default: { 
         this.getTable('retail_input')
  
