@@ -25,6 +25,9 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LoaderInterceptor } from './tables/services/loader/loader.interceptor';
 import { LoaderComponent } from './tables/services/loader/loader.component';
+import { LandingComponent } from './landing/landing.component';
+import { HomeComponent } from './home/home.component';
+
 
 
 @NgModule({
@@ -55,7 +58,7 @@ import { LoaderComponent } from './tables/services/loader/loader.component';
     },
  ],
  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

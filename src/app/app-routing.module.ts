@@ -6,16 +6,16 @@ import { InventoryTableComponent } from './tables/inventoryTable/inventoryTable.
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AuthGuard } from './auth/auth-guard.guard';
+import { LandingComponent } from './landing/landing.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
-  { path: '', component: InventoryTableComponent },
-  {
-    path: 'home', component: InventoryTableComponent, canActivate: [AuthGuard]
-  },
+  { path: '', component: LandingComponent },
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: SignInComponent },
-  { path: 'signup', component: SignUpComponent },
+  { path: 'login', component: SignInComponent, canActivate: [AuthGuard]},
+  { path: 'signup', component: SignUpComponent, canActivate: [AuthGuard]   },
 
 
 ];

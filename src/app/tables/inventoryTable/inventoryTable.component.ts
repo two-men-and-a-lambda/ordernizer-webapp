@@ -37,10 +37,10 @@ export class InventoryTableComponent {
   submitInventory() {
     this.editStock = !this.editStock
     this.wholeSaleService.postInventory(this.dataSource.data).subscribe((res: any) => {
-      for (let i = 0; i < this.dataSource.data.length; i++) {
+      for (let row of this.dataSource.data) {
         for (let key in res){
-          if (this.dataSource.data[i]['product'] === key){
-            this.dataSource.data[i]['units_remaining'] = res[key]
+          if (row.product === key){
+            row.units_remaining = res[key]
           }
         }
       }
@@ -99,13 +99,35 @@ export class InventoryTableComponent {
 
   submitShipment() {
     this.editShipment = !this.editShipment
-    this.dataSource.data.forEach(function (row) {
-      console.log(row)
-    });
+    this.wholeSaleService.postShipment(this.dataSource.data).subscribe((res: any) => {
+      for (let row of this.dataSource.data) {
+        for (let key in res){
+          if (row.product === key){
+            row.units_remaining = res[key]
+            row.isShipmentSelected = false
+            row.shipmentDate = null as any
+            row.shipmentPrice = null as any
+            row.shipmentQuantity = null as any
+
+          }
+        }
+      }
+    })
   }
   submitSale() {
     this.wholeSaleService.postSale(this.dataSource.data).subscribe((res: any) => {
-      this.dataSource.data = res
+      for (let row of this.dataSource.data) {
+        for (let key in res){
+          if (row.product === key){
+            row.units_remaining = res[key]
+            row.isSaleSelected = false
+            row.saleDate = null as any
+            row.salePrice = null as any
+            row.saleQuantity = null as any
+
+          }
+        }
+      }
     })
     const dialogRef = this.dialog.open(YourDialogComponent);
 

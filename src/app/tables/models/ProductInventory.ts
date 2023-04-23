@@ -1,5 +1,5 @@
 export interface ProductInventory {
-  businessId: string;
+  productID: number;
   wholesaleId: number;
   product: string;
   units_remaining: number;

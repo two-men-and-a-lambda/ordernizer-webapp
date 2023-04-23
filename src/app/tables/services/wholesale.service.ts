@@ -43,6 +43,23 @@ export class WholeSaleService {
     return this.http.post<ProductInventory[]>(urlString, body);
   }
 
+  postShipment(inventory: ProductInventory[]): Observable<ProductInventory[]> {
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}submit_order?user=${user}`
+    let data: any = {};
+    inventory.forEach((function (row) {
+      let key = row['product'] as string
+      if (!row['shipmentQuantity'] == null) {
+        let val = { "price": Number(row['shipmentPrice']), "units": Number(row['shipmentQuantity']), "date": row['shipmentDate'] };
+        data[key] = val
+      }
+
+    }))
+    data['timestamp'] = new Date();
+    let body = JSON.stringify(data);
+    return this.http.post<ProductInventory[]>(urlString, body);
+  }
+
   postSale(inventory: ProductInventory[]): Observable<ProductInventory[]> {
     let user = this.authService.getUserID()
     let urlString = `${this.serviceUrl}submit_sale?user=${user}`
