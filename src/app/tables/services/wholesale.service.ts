@@ -49,7 +49,7 @@ export class WholeSaleService {
     let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      if (!row['shipmentQuantity'] == null) {
+      if (row['shipmentQuantity']) {
         let val = { "price": Number(row['shipmentPrice']), "units": Number(row['shipmentQuantity']), "date": row['shipmentDate'] };
         data[key] = val
       }
@@ -66,7 +66,7 @@ export class WholeSaleService {
     let data: any = {};
     inventory.forEach((function (row) {
       let key = row['product'] as string
-      if (!row['saleQuantity'] == null) {
+      if (row['saleQuantity']) {
         let val = { "price": Number(row['salePrice']), "units": Number(row['saleQuantity']), "date": row['saleDate'] };
         data[key] = val
       }

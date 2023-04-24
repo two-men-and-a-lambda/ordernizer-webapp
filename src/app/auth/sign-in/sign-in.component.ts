@@ -18,6 +18,10 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  signUp(): void {
+    this.router.navigate(['signup'])
+  }
+
   onSignIn(form: NgForm) {
     if (form.valid) {
       this.isLoading = true;
