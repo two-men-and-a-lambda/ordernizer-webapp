@@ -30,7 +30,10 @@ export class InventoryTableComponent {
   ngOnInit() {
     this.wholeSaleService.getTotals().subscribe((res: any) => {
       this.dataSource.data = res
-      console.log(this.dataSource)
+      for (let row of this.dataSource.data){
+        row.saleDate = new Date()
+        row.shipmentDate = new Date()
+      }
     })
   }
 
@@ -105,8 +108,6 @@ export class InventoryTableComponent {
           if (row.product === key){
             row.units_remaining = res[key]
             row.isShipmentSelected = false
-            row.shipmentDate = null as any
-            row.shipmentPrice = null as any
             row.shipmentQuantity = null as any
 
           }
@@ -121,8 +122,6 @@ export class InventoryTableComponent {
           if (row.product === key){
             row.units_remaining = res[key]
             row.isSaleSelected = false
-            row.saleDate = null as any
-            row.salePrice = null as any
             row.saleQuantity = null as any
 
           }
