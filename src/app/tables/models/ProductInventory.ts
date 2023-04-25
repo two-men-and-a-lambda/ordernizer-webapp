@@ -15,8 +15,6 @@ export interface ProductInventory {
   saleQuantity : number;
   salePrice : number;
   saleDate : Date;
-
-  lastSoldPrice: number;
   
 }
 

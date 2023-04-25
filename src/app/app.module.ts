@@ -27,6 +27,8 @@ import { LoaderInterceptor } from './tables/services/loader/loader.interceptor';
 import { LoaderComponent } from './tables/services/loader/loader.component';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LineChartComponent } from './line-chart/line-chart.component';
 
 
 
@@ -47,7 +49,8 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     MatIconModule,
     MatTabsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxChartsModule
 
   ],
   providers: [
@@ -58,7 +61,7 @@ import { HomeComponent } from './home/home.component';
     },
  ],
  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent, LineChartComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

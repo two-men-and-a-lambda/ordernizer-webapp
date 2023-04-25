@@ -76,6 +76,14 @@ export class WholeSaleService {
     let body = JSON.stringify(data);
     return this.http.post<ProductInventory[]>(urlString, body);
   }
+
+  getSalesChartData(lookback: string, periodUnit: string): Observable<any>{
+    let user = this.authService.getUserID()
+    let urlString = `${this.serviceUrl}chart?user=${user}`
+    let data: any = {'lookback': lookback, 'periodUnit':periodUnit};
+    return this.http.post<any>(urlString, data);
+
+  }
   /**{"bananas": 20, "apples": 23, "timestamp": "2023-01-30 04:25:01"}**/
 
 
