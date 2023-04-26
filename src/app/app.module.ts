@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -29,6 +29,10 @@ import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LineChartComponent } from './line-chart/line-chart.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 
@@ -42,6 +46,7 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
+    ReactiveFormsModule,
     MatCheckboxModule,
     MatDialogModule,
     HttpClientModule,
@@ -50,7 +55,10 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     MatIconModule,
     MatTabsModule,
     NgxSpinnerModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatSelectModule
 
   ],
   providers: [
