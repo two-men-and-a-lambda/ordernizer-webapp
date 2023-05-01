@@ -30,7 +30,7 @@ export class AboutComponent {
   origData: Table[] = []
 
   valid: any = {}
-  table_name: string = 'retail'
+  table_name: string = 'wholesale'
 
   fcont = new FormControl()
   filterHack = false
@@ -71,12 +71,12 @@ export class AboutComponent {
   tabClick(tab: MatTabChangeEvent){
     switch(tab.index) { 
       case 1: { 
-        this.getTable('wholesale')
+        this.getTable('retail')
          break; 
       } 
 
       default: { 
-        this.getTable('retail')
+        this.getTable('wholesale')
  
          break; 
       } 

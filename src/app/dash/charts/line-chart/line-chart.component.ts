@@ -13,7 +13,7 @@ export class LineChartComponent {
 
 
 
-  view: [number, number] = [700, 300];
+  @Input() view: [number, number] = [700, 300];
 
   // options
   legend: boolean = true;

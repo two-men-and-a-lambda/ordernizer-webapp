@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class PieChartComponent {
   @Input() chartData: any[] = null as any;
-  view: [number, number] = [400, 400];
+  @Input() view: [number, number] = [400, 400];
 
   // options
   gradient: boolean = true;

@@ -28,15 +28,20 @@ import { LoaderComponent } from './tables/services/loader/loader.component';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { LineChartComponent } from './dash/charts/line-chart/line-chart.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { MetricsComponent } from './charts/metrics/metrics.component';
-import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
-import { AdvancedPieChartComponent } from './charts/advanced-pie-chart/advanced-pie-chart.component';
+import { BarChartComponent } from './dash/charts/bar-chart/bar-chart.component';
+import { PieChartComponent } from './dash/charts/pie-chart/pie-chart.component';
+import { AdvancedPieChartComponent } from './dash/charts/advanced-pie-chart/advanced-pie-chart.component';
+import { DashComponent } from './dash/dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { LayoutModule } from '@angular/cdk/layout';
+import { CardComponent } from './dash/card/card.component';
 
 
 
@@ -65,7 +70,11 @@ import { AdvancedPieChartComponent } from './charts/advanced-pie-chart/advanced-
     MatSortModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    LayoutModule
 
   ],
   providers: [
@@ -76,7 +85,7 @@ import { AdvancedPieChartComponent } from './charts/advanced-pie-chart/advanced-
     },
  ],
  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent, LineChartComponent, MetricsComponent, BarChartComponent, PieChartComponent, AdvancedPieChartComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent, LineChartComponent, BarChartComponent, PieChartComponent, AdvancedPieChartComponent, DashComponent, CardComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
