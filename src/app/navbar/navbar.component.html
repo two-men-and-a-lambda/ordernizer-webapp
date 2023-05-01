@@ -7,10 +7,10 @@
         <mat-icon>home</mat-icon>
       </button>
       <button [routerLink]="'about'" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>edit</mat-icon>
+        <mat-icon>list_alt</mat-icon>
       </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>call</mat-icon>
+      <button [routerLink]="'metrics'" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>bar_chart</mat-icon>
       </button>
       <button (click)="onClickLogin()" *ngIf="(!isLoggedIn())" mat-button class="login-button" aria-label="Example icon-button with share icon">
         <span>Login</span>

@@ -2,20 +2,27 @@
 <div>
   <div>
     <mat-tab-group class="tab-group" (selectedTabChange)="tabClick($event) ">
-      <mat-tab label="Retail">  
-        <h2>{{ table_name }}</h2>
-      </mat-tab>
 
       <mat-tab label="Wholesale"> 
+        <h2>{{ table_name }}</h2>
+      </mat-tab>
+      <mat-tab label="Retail">  
         <h2>{{ table_name }}</h2>
       </mat-tab>
 
     </mat-tab-group>
   </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Products</mat-label>
+    <mat-select [(ngModel)]="selectedProducts" multiple (openedChange)="filterTable()">
+      <mat-option *ngFor="let product of returnListAllProducts()" [value]="product">{{product}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="tableAndPagContainer">
 <div class="tableContainer">
-<table mat-table [dataSource]="dataSource">
+<table mat-table matSort [dataSource]="dataSource" class="scrollableTable">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-      <th mat-header-cell *matHeaderCellDef [ngSwitch]="col.key">
+      <th mat-sort-header *matHeaderCellDef [ngSwitch]="col.key">
           <span *ngSwitchDefault>{{ col.label }}</span>
       </th>
       <td mat-cell *matCellDef="let element">
@@ -55,5 +62,9 @@
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 
 </table>
+
+</div>
+<mat-paginator #paginator [pageSizeOptions]="[5, 10, 20, 50]" 
+showFirstLastButtons></mat-paginator>
 </div>
 </div>

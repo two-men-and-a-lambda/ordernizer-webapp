@@ -4,7 +4,18 @@
 }
 
 .tableContainer{
-    height: 600px;
+    height: 400px;
+
+    overflow-y: scroll;
+
+}
+
+.tableAndPagContainer{
+    width: 90%;
+    justify-content: center;
+
+    text-align: center;
+
 }
 
 app-child .mat-tab-label{
@@ -13,4 +24,8 @@ app-child .mat-tab-label{
     padding: 5px;
        background-color:transparent;
         font-weight: 700;
+  }
+
+.scrollableTable{
+    overflow-y: scroll;
   }

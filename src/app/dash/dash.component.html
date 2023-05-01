@@ -1,0 +1,44 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" value="1W">
+    <mat-button-toggle (click)="refreshTable('1W', '1D')" value="1W">1W</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('1M', '1W')" value="1M">1M</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('3M', '1M')" value="3M">3M</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('1Y', '1M')" value="1Y">1Y</mat-button-toggle>
+    <mat-button-toggle value="Custom" disabled>Custom</mat-button-toggle>
+</mat-button-toggle-group>
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="200px">
+    <!--Mini Cards-->
+    <!-- <mat-grid-tile *ngFor="let i of [1, 2, 3, 4]" [colspan]="( cardLayout | async )?.miniCard?.cols!"
+      [rowspan]="( cardLayout | async )?.miniCard?.rows!">
+      <app-card title="Card {{i}}"><div>Mini Card Content Here</div></app-card>
+    </mat-grid-tile> -->
+    <!--Charts-->
+    <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols" [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-card title="Sales">
+        <app-line-chart class="lineChart" [tableData]="salesData" [view]="[600, 300]" [yAxisLabel]="'Units Sold'"></app-line-chart>
+      </app-card>
+   </mat-grid-tile>
+   <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols" [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-card title="Revenue">
+        <app-line-chart class="lineChart" [tableData]="revenueData " [view]="[600, 300]" [yAxisLabel]="'Gross Revenue $'"></app-line-chart>
+      </app-card>
+   </mat-grid-tile>
+   <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols" [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-card title="Total Sales">
+        <app-pie-chart [chartData]="salesTotals" [view]="[600, 300]"></app-pie-chart>
+      </app-card>
+   </mat-grid-tile>
+   <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols" [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-card title="Total Revenue">
+        <app-bar-chart [chartData]="revenueTotals" [view]="[600, 300]" [xAxisLabel]="'Product'" [yAxisLabel]="'Total Revenue $'"></app-bar-chart>
+      </app-card>
+   </mat-grid-tile>
+    <!--Table-->
+    <mat-grid-tile [colspan]="( cardLayout | async )?.table?.cols!" [rowspan]="( cardLayout | async )?.table?.rows!">
+      <app-card title="Gross Revenue by Product">
+        <app-advanced-pie-chart [chartData]="revenueTotals" [view]="[1600, 600]"></app-advanced-pie-chart>
+      </app-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+ </div>
