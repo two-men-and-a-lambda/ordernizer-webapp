@@ -9,10 +9,10 @@
 </mat-button-toggle-group>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="200px">
     <!--Mini Cards-->
-    <mat-grid-tile *ngFor="let i of [1, 2, 3, 4]" [colspan]="( cardLayout | async )?.miniCard?.cols!"
+    <!-- <mat-grid-tile *ngFor="let i of [1, 2, 3, 4]" [colspan]="( cardLayout | async )?.miniCard?.cols!"
       [rowspan]="( cardLayout | async )?.miniCard?.rows!">
       <app-card title="Card {{i}}"><div>Mini Card Content Here</div></app-card>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
     <!--Charts-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.chart?.cols" [rowspan]="( cardLayout | async )?.chart?.rows">
       <app-card title="Sales">
