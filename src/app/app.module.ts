@@ -28,10 +28,16 @@ import { LoaderComponent } from './tables/services/loader/loader.component';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MetricsComponent } from './charts/metrics/metrics.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { AdvancedPieChartComponent } from './charts/advanced-pie-chart/advanced-pie-chart.component';
+
 
 
 
@@ -58,7 +64,8 @@ import { MatSelectModule } from '@angular/material/select';
     NgxChartsModule,
     MatSortModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonToggleModule
 
   ],
   providers: [
@@ -69,7 +76,7 @@ import { MatSelectModule } from '@angular/material/select';
     },
  ],
  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent, LineChartComponent],
+  declarations: [AppComponent, InventoryTableComponent, AboutComponent, NavbarComponent, SignInComponent, SignUpComponent, LoaderComponent, LandingComponent, HomeComponent, LineChartComponent, MetricsComponent, BarChartComponent, PieChartComponent, AdvancedPieChartComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

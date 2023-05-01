@@ -1,0 +1,16 @@
+<div class="lineCharts">
+    <app-line-chart class="lineChart" [tableData]="salesData" [yAxisLabel]="'Units Sold'"></app-line-chart>
+    <app-line-chart class="lineChart" [tableData]="revenueData " [yAxisLabel]="'Gross Revenue $'"></app-line-chart>
+</div>
+<div class="lineCharts">
+    <app-pie-chart [chartData]="salesTotals"></app-pie-chart>
+    <app-bar-chart [chartData]="salesTotals" [xAxisLabel]="'Product'" [yAxisLabel]="'Total Sales'"></app-bar-chart>
+    <app-advanced-pie-chart [chartData]="revenueTotals"></app-advanced-pie-chart>
+</div>
+<mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle (click)="refreshTable('1W', '1D')" value="1W">1W</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('1M', '1W')" value="1M">1M</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('3M', '1M')" value="3M">3M</mat-button-toggle>
+    <mat-button-toggle (click)="refreshTable('1Y', '1M')" value="1Y">1Y</mat-button-toggle>
+    <mat-button-toggle value="Custom" disabled>Custom</mat-button-toggle>
+</mat-button-toggle-group>

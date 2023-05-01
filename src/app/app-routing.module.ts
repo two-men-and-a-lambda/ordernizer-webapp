@@ -8,7 +8,7 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AuthGuard } from './auth/auth-guard.guard';
 import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { MetricsComponent } from './charts/metrics/metrics.component';
 
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
   { path: 'login', component: SignInComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignUpComponent, canActivate: [AuthGuard]   },
-  { path: 'metrics', component: LineChartComponent   },
+  { path: 'metrics', component: MetricsComponent, canActivate: [AuthGuard]   },
 
 
 
