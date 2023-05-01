@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { curveMonotoneX  } from 'd3-shape';
+
+
 
 
 
@@ -17,6 +20,7 @@ export class LineChartComponent {
 
   // options
   legend: boolean = true;
+  curve: any = curveMonotoneX;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
