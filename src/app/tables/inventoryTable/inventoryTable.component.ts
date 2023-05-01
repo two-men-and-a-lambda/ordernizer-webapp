@@ -128,16 +128,7 @@ export class InventoryTableComponent {
         }
       }
     })
-    const dialogRef = this.dialog.open(YourDialogComponent);
 
-    /* 
-      Handles what happens after the modal dialog is closed
-    */
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('nice');
-      }
-    });
   }
 
   editRow(row: ProductInventory) {
