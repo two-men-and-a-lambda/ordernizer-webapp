@@ -1,5 +1,6 @@
 # ordernizer-webapp
 Angular Web App for customer interaction with the Ordernizer
+https://www.ordernizer.org/
 
 To run this app locally you will need to install angular cli
 "npm install -g @angular/cli"
